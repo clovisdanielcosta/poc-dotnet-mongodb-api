@@ -1,6 +1,6 @@
-<h1 align="center">
+<h2 align="center">
 :small_red_triangle_down: POC - API ASP.NET Core with MongoDB  
-</h1>
+</h2>
 
 <h2 align="center">
 Bootcamp everis Fullstack Developer by Digital Innovation One
