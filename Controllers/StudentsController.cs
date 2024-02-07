@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Poc.MongoDB.Api.Interfaces;
+using Poc.MongoDB.Api.Models;
 
 namespace Poc.MongoDB.Api.Controllers
 {
@@ -7,79 +9,59 @@ namespace Poc.MongoDB.Api.Controllers
     [ApiController]
     public class StudentsController : Controller
     {
-        // GET: StudentsController
-        public ActionResult Index()
+        private readonly IStudentService _studentService;
+
+        public StudentsController(IStudentService studentService)
         {
-            return View();
+            _studentService = studentService;
         }
 
-        // GET: StudentsController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public ActionResult<List<Student>> Get()
         {
-            return View();
+            return _studentService.Get();
         }
 
-        // GET: StudentsController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public ActionResult<Student> Get(string id)
         {
-            return View();
+            var student = _studentService.Get(id);
+
+            if (student != null) return student;
+
+            return NotFound($"Student with Id = {id} not found");
         }
 
-        // POST: StudentsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult<Student> Post(Student student)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _studentService.Create(student);
+
+            return CreatedAtAction(nameof(Get), new { id = student.Id }, student);
         }
 
-        // GET: StudentsController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("{id}")]
+        public ActionResult Update(string id, Student student)
         {
-            return View();
+            var existingStudent = _studentService.Get(id);
+
+            if(existingStudent == null) return NotFound($"Student with Id = {id} not found");
+
+            _studentService.Update(id, student);
+
+            return NoContent();
         }
 
-        // POST: StudentsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+        public ActionResult Delete(string id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var student = _studentService.Get(id);
 
-        // GET: StudentsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            if (student == null) return NotFound($"Student with Id = {id} not found");
 
-        // POST: StudentsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _studentService.Delete(student.Id);
+
+            return Ok($"Student with Id = {id} deleted");
         }
     }
 }
