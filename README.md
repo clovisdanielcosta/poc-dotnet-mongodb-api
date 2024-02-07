@@ -2,10 +2,6 @@
 :small_red_triangle_down: POC - API ASP.NET Core with MongoDB  
 </h2>
 
-<h2 align="center">
-Bootcamp everis Fullstack Developer by Digital Innovation One
-</h2>
-
 <p align="center">
   <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&color=7159c1&labelColor=000000" alt="PRs welcome!" />
 
