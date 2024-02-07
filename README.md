@@ -37,5 +37,5 @@ This repository was created for learning purposes. It's a POC (Proof of Concept)
 
 ## :small_orange_diamond: License
 
-This project is under MIT license. Open file [LICENSE](LICENSE.md) to details. 
+This project is under MIT license. Open file [LICENSE]( LICENSE.md ) to details. 
 The images in this project were made by repo's owner or taken from another repo in the web with the right authorization of use.
